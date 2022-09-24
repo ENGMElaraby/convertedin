@@ -23,7 +23,7 @@ Route::group(['middleware' => 'auth:admin'], static function () {
     Route::get('/', static function () {
         return redirect()->route('admin.dashboard');
     });
+    Route::get('dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('search-user', 'UsersController@searchForUsers')->name('search.user');
     Route::resource('task', 'TasksController', ['except' => ['delete', 'update']]);
-    Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 });
