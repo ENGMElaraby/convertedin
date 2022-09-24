@@ -25,6 +25,6 @@ class TasksRepository extends RepositoryCrud
      */
     public function index(bool $pagination = false, int $perPage = 6): mixed
     {
-        return [parent::index($pagination, $perPage), []];
+        return [parent::index($pagination, $perPage), $this->model->count()];
     }
 }

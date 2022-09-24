@@ -32,11 +32,11 @@ class TasksController extends CrudControllerController
      */
     public function index(): Response
     {
-        [$data, $records] = $this->repository->index($this->pagination, $this->perPage);
+        [$data, $totalRecords] = $this->repository->index($this->pagination, $this->perPage);
         return new Response(
             data: [
                 'raw' => 1,
-                'recordsTotal' => 100,
+                'recordsTotal' => $totalRecords,
                 'recordsFiltered' => $this->perPage,
                 'data' => TasksResource::collection($data)
             ],
