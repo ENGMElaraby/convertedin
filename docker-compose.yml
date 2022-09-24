@@ -1,0 +1,103 @@
+version: '3'
+
+networks:
+  converted:
+
+services:
+  converted-in:
+    build:
+      context: .
+      dockerfile: nginx.dockerfile
+    container_name: nginx_converted
+    ports:
+      - 8800:80
+    volumes:
+      - ./src:/var/www/html:delegated
+    depends_on:
+      - composer
+      - php
+      - mysql
+      - phpmyadmin
+      - artisan
+    networks:
+      - converted
+
+  mysql:
+    image: mariadb:10.5.8
+    container_name: mysql_converted
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 8807:3306
+    environment:
+      MYSQL_DATABASE: converted
+      MARIADB_DATABASE: converted
+      MYSQL_USER: project
+      MARIADB_USER: project
+      MYSQL_PASSWORD: project
+      MARIADB_PASSWORD: project
+      MARIADB_ROOT_PASSWORD: project
+      MYSQL_ROOT_PASSWORD: project
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - converted
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_converted
+    environment:
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: project
+      PMA_HOST: mysql_converted
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      UPLOAD_LIMIT: 300M
+    restart: always
+    ports:
+      - 8890:80
+    networks:
+      - converted
+
+  php: #    extra_hosts:
+    #      - "host.docker.internal:host-gateway"
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    container_name: php_converted
+    volumes:
+      - ./src:/var/www/html:delegated
+    networks:
+      - converted
+
+  composer:
+    build:
+      context: .
+      dockerfile: composer.dockerfile
+    container_name: composer_converted
+    volumes:
+      - ./src:/var/www/html
+    working_dir: /var/www/html
+    user: converted
+    depends_on:
+      - php
+    entrypoint: [ 'composer', '--ignore-platform-reqs' ]
+    command:
+      - composer install
+    networks:
+      - converted
+
+  artisan:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    container_name: artisan_converted
+    volumes:
+      - ./src:/var/www/html:delegated
+    depends_on:
+      - mysql
+    working_dir: /var/www/html
+    user: converted
+    entrypoint: [ 'php', '/var/www/html/artisan' ]
+    networks:
+      - converted

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="cb835352-25a8-457d-a300-4006f9bb385d" name="Lamer">
+        <fileTransfer accessType="SFTP" host="92.205.1.71" port="22" sshConfigId="2f9e1dad-8fd9-45e4-b4c6-f6cc0dfa5852" sshConfig="msyjwsqnw2c4@92.205.1.71:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
