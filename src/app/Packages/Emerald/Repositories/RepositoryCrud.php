@@ -32,7 +32,7 @@ abstract class RepositoryCrud extends Repository implements RepositoryContractCr
         $model = $this->query;
 
         if ($pagination) {
-            return $model->paginate($perPage);
+            return $model->paginate($perPage, ['*'], 'draw');
         }
 
         return $model->get(['*']);

@@ -32,16 +32,16 @@
                 "lengthMenu": [10, 200, 300, 400],
                 "pageLength": 10,
                 "processing": true,
-                "bStateSave": true,
+                "serverSide": true,
                 "ajax": {
                     url: '{{ route('admin.task.index') }}',
-                    dataSrc: 'data'
+                    dataSrc: 'data.data'
                 },
                 "columns": [
                     {data: 'title'},
                     {data: 'description'},
-                    {data: 'get_user.name'},
-                    {data: 'get_admin.name'},
+                    {data: 'assigned_to_name'},
+                    {data: 'assigned_by_name'},
                 ]
             });
         });
@@ -72,22 +72,6 @@
                     </tr>
                     </thead>
                     <tbody style="direction: ltr">
-                    {{--                    @foreach($data as $task)--}}
-                    {{--                        <tr>--}}
-                    {{--                            <td>--}}
-                    {{--                                {{ $task->title }}--}}
-                    {{--                            </td>--}}
-                    {{--                            <td>--}}
-                    {{--                                {{ $task->description }}--}}
-                    {{--                            </td>--}}
-                    {{--                            <td>--}}
-                    {{--                                {{ $task->getUser?->name }}--}}
-                    {{--                            </td>--}}
-                    {{--                            <td>--}}
-                    {{--                                {{ $task->getAdmin?->name }}--}}
-                    {{--                            </td>--}}
-                    {{--                        </tr>--}}
-                    {{--                    @endforeach--}}
                     </tbody>
                 </table>
             </div>
